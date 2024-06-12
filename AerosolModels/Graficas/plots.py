@@ -141,8 +141,6 @@ def cd_qn(df):
 times = [10,40,70]
 for t in times:
     r_t = rel_t_step[t] 
-    print(r_t)
-
 
     t = t % 80
     aerosol_model = csv_to_t(t,'sto')
