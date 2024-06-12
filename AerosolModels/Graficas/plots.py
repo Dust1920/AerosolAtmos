@@ -67,6 +67,7 @@ det_colors = {
 
 def aero_plot(df):
     fig, ax = plt.subplots(ncols=2, nrows=2, sharey=True, figsize = (8,6))
+    ax[1,0].set_ylabel("Altura (km)")
     ax[0,0].set_ylabel("Altura (km)")
     ax[0,0].plot(df['w'],height, label = r"$w$", color = sto_colors['w'])
     ax[0,0].set_xlim([-5,5])
@@ -88,6 +89,7 @@ def aero_plot(df):
 def aero_detsto_plot(df,df_d):
     fig, ax = plt.subplots(ncols=2, nrows=2, sharey=True, figsize = (8,6))
     ax[0,0].set_ylabel("Altura (km)")
+    ax[1,0].set_ylabel("Altura (km)")
     ax[0,0].plot(df['w'],height, label = r"$w$", color = sto_colors['w'])
     ax[0,0].plot(df_d['w'],height, color = det_colors['w'], label = r"$w$ det")
     ax[0,0].set_xlim([-5,5])
@@ -119,7 +121,7 @@ def Qzplot(df):
     qz = [qv - qvs[i] for i,qv in enumerate(df['qv'])]
     ax.plot(qz, height, color = sto_colors['qz'], label = r"$Q$")
     ax.plot([0,0], [0,15], 'k--', label = r"$0$")
-    ax.set_xlim([-7,7])
+    ax.set_xlabel("Proporción (g/kg)")
     fig.legend()
     return fig
 
