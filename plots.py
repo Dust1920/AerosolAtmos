@@ -35,11 +35,13 @@ def q_vs(z):
 def tau_c_inv(qn):
     nm = (qn/1000 - 0.5) / gamma
     tc = np.exp(-nm ** 2) * tau_cr
+    tc = 1
     return tc
 
 
 def condensation(qv, qvs, qn):
-    cd = np.max([qv - qvs,0])*tau_c_inv(qn)
+    # cd = np.max([qv - qvs,0])*tau_c_inv(qn)
+    cd = (qv - qvs)*tau_c_inv(qn)
     return cd
 
 sto_colors = {
