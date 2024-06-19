@@ -10,7 +10,7 @@ rel_td_step, files_det = pcd.get_data_mode('det')
 def csv_to_t(id, mode):
     f = f"data_{id}_{mode}"
     df = pcd.pd.read_csv(f"data\\data_files\\{f}.csv", header=None)
-    df.columns = ['w','theta','qv','qr','qn','t','id']
+    df.columns = ['w','theta','qv','qr','qn','t','id','cd']
     df['t'] = df['t'] * 15
     return df
 
