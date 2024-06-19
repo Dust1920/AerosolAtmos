@@ -1,8 +1,13 @@
 # Modelo Atmosférico de Aerosoles. 
+Este repositorio forma parte de mi proyecto de tesis para el Posgrado de Matemáticas de la Universidad de Sonora. Asesorado por los doctores.
+
+* Dr. Gerardo Hernández Dueñas.
+* Dr. Saúl Díaz Infante Velasco.
+
+El repositorio consta del codigo del modelo construido por el Dr. Gerardo Hernández Dueñas en Matlab y la graficación de los resultados mediante Python. 
 
 
 ## Explicación del Repositorio
-
 El repositorio posee los siguientes archivos relevantes, aparte del README.md que ahora estas leyendo. 
 * books
 * data
@@ -15,7 +20,7 @@ El repositorio posee los siguientes archivos relevantes, aparte del README.md qu
 * process_data.py
 * process.py
 
-Cabe aclarar que dentro del repositorio. 
+
   
 ## Introducción
 Dentro del entorno atmosférico, cada proceso es influenciado por variables u otros proceso que aparentan ajenos. En nuestro caso exploraremos el ciclo del agua, principalmente dos de los procesos más importantes. 
