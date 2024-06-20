@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-
 rel_t_step, files_sto = pcd.get_data_mode('sto')
 rel_td_step, files_det = pcd.get_data_mode('det')
+
 
 def csv_to_t(id, mode):
     f = f"data_{id}_{mode}"
@@ -15,12 +15,13 @@ def csv_to_t(id, mode):
     return df
 
 ## Qvs
-
 qvs_0 = 20
 qvs_0 = qvs_0 / 1000
 
+
 gamma = 1
-tau_cr = 1
+tau_cr= 1
+
 
 def q_vs(z):
     a0 = 18.04 # km
@@ -31,6 +32,7 @@ def q_vs(z):
     q = (qvs_0 / pz)*np.exp(- a0 * ( 1 / ((1 - a1 * np.log(1 + a2*z)) * (1 + a2 * z)) - 1 ))
     # g/kg / km ** 3.48
     return q
+
 
 def tau_c_inv(qn):
     nm = (qn/1000 - 0.5) / gamma
@@ -44,6 +46,7 @@ def condensation(qv, qvs, qn):
     cd = (qv - qvs)*tau_c_inv(qn)
     return cd
 
+
 sto_colors = {
     "w":"blue",
     "theta":"red",
@@ -54,6 +57,7 @@ sto_colors = {
     "qz":"purple"
 }
 
+
 det_colors = {
     "w":"black",
     "theta":"black",
@@ -63,8 +67,6 @@ det_colors = {
     "cd":"black",
     "qz":"black"
 }
-
-
 
 
 def aero_plot(df):
@@ -89,7 +91,6 @@ def aero_plot(df):
     fig.legend(loc='upper right', bbox_to_anchor=(1, 1))
     fig.tight_layout()
     return fig
-
 
 
 def aero_detsto_plot(df,df_d):
@@ -119,7 +120,6 @@ def aero_detsto_plot(df,df_d):
     fig.legend(loc='upper right', bbox_to_anchor=(1, 1))
     fig.tight_layout()
     return fig
-
 
 
 def Qzplot(df):
