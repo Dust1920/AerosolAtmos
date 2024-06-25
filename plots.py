@@ -22,6 +22,7 @@ sto_colors = {
     "qr":"lightblue",
     "qn":"orange",
     "cd":"magenta",
+    "qvs": "purple",
     "qz":"purple"
 }
 
@@ -116,23 +117,76 @@ def cd_qn(df):
     fig.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
     return fig
 
+result_plots = 0
+if result_plots:
+    times = [10,40,70]
+    for t in times:
+        r_t = rel_t_step[t] 
 
-times = [10,40,70]
-for t in times:
-    r_t = rel_t_step[t] 
+        t = t % 80
+        aerosol_model = csv_to_t(t,'sto')
+        aerosol_model_det = csv_to_t(t,'det')
+        height = np.linspace(0,15,len(aerosol_model))
 
-    t = t % 80
-    aerosol_model = csv_to_t(t,'sto')
-    aerosol_model_det = csv_to_t(t,'det')
-    height = np.linspace(0,15,len(aerosol_model))
+        fig_1 = aero_plot(aerosol_model)
+        fig_2 = aero_detsto_plot(aerosol_model, aerosol_model_det)
+        fig_3 = Qzplot(aerosol_model)
+        fig_4 = cd_qn(aerosol_model)
 
-    fig_1 = aero_plot(aerosol_model)
-    fig_2 = aero_detsto_plot(aerosol_model, aerosol_model_det)
-    fig_3 = Qzplot(aerosol_model)
-    fig_4 = cd_qn(aerosol_model)
-
-    figs_t = [fig_1, fig_2,fig_3,fig_4]
-    for n, fig in enumerate(figs_t):
-        fig.savefig(f"fig_{p.data_origin}_{n}_{r_t}.png")
+        figs_t = [fig_1, fig_2,fig_3,fig_4]
+        for n, fig in enumerate(figs_t):
+            fig.savefig(f"fig_{p.data_origin}_{n}_{r_t}.png")
 
 
+fig1, ax = plt.subplots(ncols=2, nrows=1, figsize = (8,6),sharey = True)
+data_0 = csv_to_t(0, 'sto')
+height = np.linspace(0,15,len(data_0))
+
+ax[0].plot(data_0['qn'], height, label = r"$q_N(0, z)$", color = sto_colors['qn'])
+ax[1].plot(data_0['qvs'], height, label = r"$q_{vs}(0, z)$", color = sto_colors['qvs'])
+ax[1].plot(data_0['qv'], height, label = r"$q_v(0, z)$", color = sto_colors['qv'])
+ax[0].set_xlabel('CCN (ppV)')
+ax[1].set_xlabel('q (g/kg)')
+ax[0].set_yticks([0, 3, 6, 9, 12, 15])
+ax[0].set_ylim([0,15])
+ax[0].set_ylabel('Altura (km)')
+fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=4, fancybox=True, shadow=True)
+# fig1.savefig("plot1-gamma.png")
+
+
+data_f = csv_to_t(80, 'sto')
+
+
+
+fig2, ax = plt.subplots(nrows=2, ncols=3, figsize = (8, 6), sharey = True)
+ax[0, 0].set_ylabel("Altura (km)")
+ax[0, 0].plot(data_f['w'],height, label = r"$w$", color = sto_colors['w'])
+ax[0, 0].plot(data_0['w'],height, color = det_colors['w'], linestyle = "dashed")
+ax[0, 0].set_ylim([0,15])
+ax[0, 0].set_xlim([-5,5])
+ax[0, 0].set_xlabel("Velocidad (m/s)")
+ax[0, 0].set_yticks([0, 3, 6, 9, 12, 15])
+
+ax[0, 1].plot(data_f['theta'],height, label = r"$\theta'$", color = sto_colors['theta'])
+ax[0, 1].plot(data_0['theta'],height, color = det_colors['theta'], linestyle = "dashed")
+ax[0, 1].set_xlim([-5,5])
+ax[0, 1].set_xlabel(r"Pert.Temperatura ($\theta$)")
+
+ax[1, 1].plot(data_f['qv'], height, color = sto_colors['qv'], label = r"$q_v$")
+ax[1, 1].plot(data_0['qv'], height, color = det_colors['qv'], linestyle = "dashed")
+ax[1, 1].set_xlabel(r"Vapor de Agua (g/kg)")
+ax[1, 1].set_ylim([0,15])
+
+ax[1, 0].set_ylabel("Altura (km)")
+ax[1, 2].plot(data_f['qr'], height, color = sto_colors['qr'], label = r"$q_r$")
+ax[1, 2].plot(data_0['qr'], height, color = det_colors['qr'], linestyle = "dashed")
+ax[1, 2].set_xlabel(r"Agua líquida (g/kg)")
+ax[1, 2].set_ylim([0,15])
+
+ax[1, 0].set_yticks([0, 3, 6, 9, 12, 15])
+ax[1, 0].plot(data_f['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
+ax[1, 0].plot(data_0['qn'],height, color = det_colors['qn'], linestyle = "dashed")
+ax[1, 0].set_xlabel(r"CCN ($p/cm^3$)")
+fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+fig2.savefig('plot2-gamma.png')
+plt.show()
