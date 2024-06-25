@@ -57,7 +57,7 @@ def aero_plot(df):
     ax[1, 0].set_ylim([0, 15])
     ax[1, 1].plot(df['qn'],height, label = r"$q_n$", color = sto_colors['qn'])
     ax[1, 1].set_xlabel(r"CCN ($p/cm^3$)")
-    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
     return fig
 
 
@@ -85,7 +85,7 @@ def aero_detsto_plot(df,df_d):
     ax[1, 1].plot(df['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
     ax[1, 1].plot(df_d['qn'],height, color = det_colors['qn'], linestyle = "dashed")
     ax[1, 1].set_xlabel(r"CCN ($p/cm^3$)")
-    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
     return fig
 
 
@@ -101,7 +101,7 @@ def Qzplot(df):
     ax.set_xlabel("Proporción (g/kg)")
     ax.set_ylim([0,15])
     ax.set_yticks([0, 3, 6, 9, 12, 15])
-    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
     return fig
 
 
@@ -114,10 +114,10 @@ def cd_qn(df):
     ax.plot(qn, height, color = sto_colors['qn'], label = r"$q_N$")
     ax.set_ylim([0,15])
     ax.set_yticks([0, 3, 6, 9, 12, 15])
-    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+    fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
     return fig
 
-result_plots = 0
+result_plots = 1
 if result_plots:
     times = [10,40,70]
     for t in times:
@@ -150,14 +150,11 @@ ax[1].set_xlabel('q (g/kg)')
 ax[0].set_yticks([0, 3, 6, 9, 12, 15])
 ax[0].set_ylim([0,15])
 ax[0].set_ylabel('Altura (km)')
-fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=4, fancybox=True, shadow=True)
+fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fancybox=True, shadow=True)
 # fig1.savefig("plot1-gamma.png")
 
 
 data_f = csv_to_t(80, 'sto')
-
-
-
 fig2, ax = plt.subplots(nrows=2, ncols=3, figsize = (8, 6), sharey = True)
 ax[0, 0].set_ylabel("Altura (km)")
 ax[0, 0].plot(data_f['w'],height, label = r"$w$", color = sto_colors['w'])
@@ -177,16 +174,16 @@ ax[1, 1].plot(data_0['qv'], height, color = det_colors['qv'], linestyle = "dashe
 ax[1, 1].set_xlabel(r"Vapor de Agua (g/kg)")
 ax[1, 1].set_ylim([0,15])
 
-ax[1, 0].set_ylabel("Altura (km)")
 ax[1, 2].plot(data_f['qr'], height, color = sto_colors['qr'], label = r"$q_r$")
 ax[1, 2].plot(data_0['qr'], height, color = det_colors['qr'], linestyle = "dashed")
 ax[1, 2].set_xlabel(r"Agua líquida (g/kg)")
 ax[1, 2].set_ylim([0,15])
 
+
+ax[1, 0].set_ylabel("Altura (km)")
 ax[1, 0].set_yticks([0, 3, 6, 9, 12, 15])
 ax[1, 0].plot(data_f['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
 ax[1, 0].plot(data_0['qn'],height, color = det_colors['qn'], linestyle = "dashed")
 ax[1, 0].set_xlabel(r"CCN ($p/cm^3$)")
-fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 1), ncol=5, fancybox=True, shadow=True)
+fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
 fig2.savefig('plot2-gamma.png')
-plt.show()

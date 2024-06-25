@@ -9,7 +9,7 @@ for f in files:
     if f.endswith(".zip"):
         zip_files.append(f)
 
-idx = 0
+idx = 3
 
 data_origin = zip_files[idx]
 print(data_origin)
