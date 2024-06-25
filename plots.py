@@ -1,7 +1,7 @@
 import process_data as pcd
 import matplotlib.pyplot as plt
 import numpy as np
-
+import process as p
 
 rel_t_step, files_sto = pcd.get_data_mode('sto')
 rel_td_step, files_det = pcd.get_data_mode('det')
@@ -90,7 +90,7 @@ def aero_detsto_plot(df,df_d):
 
 def Qzplot(df):
     fig, ax = plt.subplots(figsize = (8,6))
-    qvs = [qvs * 1000 for z in df['qvs']]
+    qvs = [q_vs * 1000 for q_vs in df['qvs']]
     ax.set_ylabel("Altura (km)")
     #ax.plot(df['qv'], height, color = "gray", label = r"$q_v$")
     #ax.plot(qvs, height, color = "purple", label = r"$q_{vs}$")
@@ -133,6 +133,6 @@ for t in times:
 
     figs_t = [fig_1, fig_2,fig_3,fig_4]
     for n, fig in enumerate(figs_t):
-        fig.savefig(f"fig_{n}_{r_t}.png")
+        fig.savefig(f"fig_{p.data_origin}_{n}_{r_t}.png")
 
 
