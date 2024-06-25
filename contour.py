@@ -11,22 +11,24 @@ def csv_to_t(id, mode):
 
 mode = 'sto'
 rel_t_step, files_sto = pcd.get_data_mode('sto')
-variable = 'w'
+variable = 'cd'
 
 d0 = csv_to_t(0, mode)
 height = np.linspace(0,15, len(d0))
-time = [rel_t_step[j] for j in range(80)]
+time = [round(rel_t_step[j], 4) for j in range(80)]
 contour = pcd.pd.DataFrame(index = height, columns = time)
 for i in range(80):
-    r_i = round(time[i],4)
+    r_i = time[i]
     data = csv_to_t(i, mode)
-    height = np.linspace(0,15, data.shape[0])
-    print(contour)
-    print(data)
     contour[r_i] = list(data[variable])
+    try:
+        x = time.index(r_i)
+        print("x = ",x)
+    except:
+        print('NO',r_i)
 
 print(contour)
 
-data = csv_to_t(5, mode)
-
-
+plt.contourf(time, height,  contour)
+plt.colorbar()
+plt.show()

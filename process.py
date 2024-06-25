@@ -9,7 +9,7 @@ for f in files:
     if f.endswith(".zip"):
         zip_files.append(f)
 
-data_origin = zip_files[3]
+data_origin = zip_files[0]
 print(data_origin)
 path_data = os.path.join(folder_data, data_origin)
 
