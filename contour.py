@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.colors import Normalize
 import numpy as np
 import process_data as pcd
 import process as p
@@ -10,6 +11,7 @@ def csv_to_t(id, mode):
     df['t'] = df['t'] * 15
     return df
 
+print(p.data_origin)
 mode = 'sto'
 rel_t_step, files_sto = pcd.get_data_mode(mode)
 variable = 'cd'
@@ -62,24 +64,29 @@ def atmos_contour(variable,ax = None, **kwargs):
         contour[r_i] = list(data[variable])
         try:
             x = time.index(r_i)
-            print("x = ",x)
         except:
             print('NO',r_i)
-    countour_plot = ax.contour(time, height,  contour, 100)
+    countour_plot = ax.contour(time, height,  contour)
+    norm= Normalize(vmin=countour_plot.cvalues.min(), vmax=countour_plot.cvalues.max())
+    # a previous version of this used
+    #norm= matplotlib.colors.Normalize(vmin=cs.vmin, vmax=cs.vmax)
+    # which does not work any more
+    sm = plt.cm.ScalarMappable(norm=norm, cmap = countour_plot.cmap)
+    sm.set_array([])
     ax.set_xlabel('Tiempo (mins)')
     ax.set_ylabel('Altura (km)')
     ax.set_yticks([0, 3, 6, 9, 12, 15])
     ax.set_xticks([10 * i for i in range(7)])
     ax.set_title(f'{name_variable} {unit}')
-    plt.colorbar(countour_plot, ax = ax)
+    plt.colorbar(sm, ax = ax)
 
 
-print(p.data_origin)
 
 fig, axs = plt.subplots(2, 2, figsize=(8, 6))  # Crear una figura con 2 subgráficos
+
 # Llamar a la función atmos_contour para cada subgráfico
 atmos_contour('w', ax=axs[0,0], name = r"$w$", unit = r"m$s^{-1}$")
-atmos_contour('qr', ax=axs[0,1], name = r"$q_r$")
+atmos_contour('cd', ax=axs[0,1], name = r"$C_d$", unit = r"$g(kgs)^{-1}$")
 atmos_contour('qn', ax=axs[1,0], name = r"$q_N$")
 atmos_contour('theta', ax=axs[1,1], name = r"$\theta'$", unit = r"$K$")
 plt.tight_layout()
