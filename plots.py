@@ -91,7 +91,7 @@ def aero_detsto_plot(df,df_d):
 
 def Qzplot(df):
     fig, ax = plt.subplots(figsize = (8,6))
-    qvs = [q_vs * 1000 for q_vs in df['qvs']]
+    qvs = [q_vs for q_vs in df['qvs']]
     ax.set_ylabel("Altura (km)")
     #ax.plot(df['qv'], height, color = "gray", label = r"$q_v$")
     #ax.plot(qvs, height, color = "purple", label = r"$q_{vs}$")
@@ -110,7 +110,7 @@ def cd_qn(df):
     cd = [s for s in df['cd']]
     fig, ax = plt.subplots(figsize = (8,6))
     ax.set_ylabel("Altura (km)")
-    ax.plot(cd, height, color = sto_colors['cd'], label = r"$10C_d$")
+    ax.plot(cd, height, color = sto_colors['cd'], label = r"$C_d$")
     ax.plot(qn, height, color = sto_colors['qn'], label = r"$q_N$")
     ax.set_ylim([0,15])
     ax.set_yticks([0, 3, 6, 9, 12, 15])
@@ -122,7 +122,7 @@ if result_plots:
     times = [10,40,70]
     for t in times:
         r_t = rel_t_step[t] 
-
+        r_t = round(r_t, 4)
         t = t % 80
         aerosol_model = csv_to_t(t,'sto')
         aerosol_model_det = csv_to_t(t,'det')
@@ -151,7 +151,7 @@ ax[0].set_yticks([0, 3, 6, 9, 12, 15])
 ax[0].set_ylim([0,15])
 ax[0].set_ylabel('Altura (km)')
 fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fancybox=True, shadow=True)
-# fig1.savefig("plot1-gamma.png")
+fig1.savefig("plot1-gamma.png")
 
 
 data_f = csv_to_t(80, 'sto')
