@@ -91,3 +91,11 @@ ax[1, 2].set_xlim([0, 10])
 matlab_fig.legend(loc = "upper center", ncols = 6, bbox_to_anchor = (0.5,0.95))
 plt.savefig('matlab_plot.png')
 plt.show()
+
+df_copy = df.copy()
+for c in df_copy.columns:
+    if c.endswith('_ini'):
+        df_copy.drop(columns=c, inplace=True)
+
+
+print(df_copy)
