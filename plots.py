@@ -117,7 +117,7 @@ def cd_qn(df):
     fig.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
     return fig
 
-result_plots = 1
+result_plots = 0
 if result_plots:
     times = [10,40,70]
     for t in times:
@@ -138,52 +138,62 @@ if result_plots:
             fig.savefig(f"fig_{p.data_origin}_{n}_{r_t}.png")
 
 
-fig1, ax = plt.subplots(ncols=2, nrows=1, figsize = (8,6),sharey = True)
-data_0 = csv_to_t(0, 'sto')
-height = np.linspace(0,15,len(data_0))
+def inital_plot(mode):
+    data_0 = csv_to_t(0, mode)
+    height = np.linspace(0,15,len(data_0))
+    fig1, ax = plt.subplots(ncols=2, nrows=1, figsize = (8,6),sharey = True)
+    ax[0].plot(data_0['qn'], height, label = r"$q_N(0, z)$", color = sto_colors['qn'])
+    ax[1].plot(data_0['qvs'], height, label = r"$q_{vs}(0, z)$", color = sto_colors['qvs'])
+    ax[1].plot(data_0['qv'], height, label = r"$q_v(0, z)$", color = sto_colors['qv'])
+    ax[0].set_xlabel('CCN (ppV)')
+    ax[1].set_xlabel('q (g/kg)')
+    ax[0].set_yticks([0, 3, 6, 9, 12, 15])
+    ax[0].set_ylim([0,15])
+    ax[0].set_ylabel('Altura (km)')
+    fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fancybox=True, shadow=True)
+    return fig1
 
-ax[0].plot(data_0['qn'], height, label = r"$q_N(0, z)$", color = sto_colors['qn'])
-ax[1].plot(data_0['qvs'], height, label = r"$q_{vs}(0, z)$", color = sto_colors['qvs'])
-ax[1].plot(data_0['qv'], height, label = r"$q_v(0, z)$", color = sto_colors['qv'])
-ax[0].set_xlabel('CCN (ppV)')
-ax[1].set_xlabel('q (g/kg)')
-ax[0].set_yticks([0, 3, 6, 9, 12, 15])
-ax[0].set_ylim([0,15])
-ax[0].set_ylabel('Altura (km)')
-fig1.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=4, fancybox=True, shadow=True)
-fig1.savefig("plot1-gamma.png")
+def plot_data_f(time_id, **kwargs):
+    mode = kwargs.get('mode','sto')
+    data_f = csv_to_t(time_id, mode)
+    data_0 = csv_to_t(0, mode)
+    height = np.linspace(0,15,len(data_0))
+    fig2, ax = plt.subplots(nrows=2, ncols=3, figsize = (8, 6), sharey = True)
+    ax[0, 0].set_ylabel("Altura (km)")
+    ax[0, 0].plot(data_f['w'],height, label = r"$w$", color = sto_colors['w'])
+    ax[0, 0].plot(data_0['w'],height, color = det_colors['w'], linestyle = "dashed")
+    ax[0, 0].set_ylim([0,15])
+    ax[0, 0].set_xlim([-5,5])
+    ax[0, 0].set_xlabel("Velocidad (m/s)")
+    ax[0, 0].set_yticks([0, 3, 6, 9, 12, 15])
+
+    ax[0, 1].plot(data_f['theta'],height, label = r"$\theta'$", color = sto_colors['theta'])
+    ax[0, 1].plot(data_0['theta'],height, color = det_colors['theta'], linestyle = "dashed")
+    ax[0, 1].set_xlim([-5,5])
+    ax[0, 1].set_xlabel(r"Pert.Temperatura ($\theta$)")
+
+    ax[0, 2].plot(data_f['cd'],height, label = r"$C_d'$", color = sto_colors['cd'])
+    ax[0, 2].plot(data_0['cd'],height, color = det_colors['cd'], linestyle = "dashed")
+    ax[1, 1].plot(data_f['qv'], height, color = sto_colors['qv'], label = r"$q_v$")
+    ax[1, 1].plot(data_0['qv'], height, color = det_colors['qv'], linestyle = "dashed")
+    ax[1, 1].set_xlabel(r"Vapor de Agua (g/kg)")
+    ax[1, 1].set_ylim([0,15])
+
+    ax[1, 2].plot(data_f['qr'], height, color = sto_colors['qr'], label = r"$q_r$")
+    ax[1, 2].plot(data_0['qr'], height, color = det_colors['qr'], linestyle = "dashed")
+    ax[1, 2].set_xlabel(r"Agua líquida (g/kg)")
+    ax[1, 2].set_ylim([0,15])
 
 
-data_f = csv_to_t(80, 'sto')
-fig2, ax = plt.subplots(nrows=2, ncols=3, figsize = (8, 6), sharey = True)
-ax[0, 0].set_ylabel("Altura (km)")
-ax[0, 0].plot(data_f['w'],height, label = r"$w$", color = sto_colors['w'])
-ax[0, 0].plot(data_0['w'],height, color = det_colors['w'], linestyle = "dashed")
-ax[0, 0].set_ylim([0,15])
-ax[0, 0].set_xlim([-5,5])
-ax[0, 0].set_xlabel("Velocidad (m/s)")
-ax[0, 0].set_yticks([0, 3, 6, 9, 12, 15])
+    ax[1, 0].set_ylabel("Altura (km)")
+    ax[1, 0].set_yticks([0, 3, 6, 9, 12, 15])
+    ax[1, 0].plot(data_f['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
+    ax[1, 0].plot(data_0['qn'],height, color = det_colors['qn'], linestyle = "dashed")
+    ax[1, 0].set_xlabel(r"CCN ($p/cm^3$)")
+    fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=6, fancybox=True, shadow=True)
+    return fig2
 
-ax[0, 1].plot(data_f['theta'],height, label = r"$\theta'$", color = sto_colors['theta'])
-ax[0, 1].plot(data_0['theta'],height, color = det_colors['theta'], linestyle = "dashed")
-ax[0, 1].set_xlim([-5,5])
-ax[0, 1].set_xlabel(r"Pert.Temperatura ($\theta$)")
-
-ax[1, 1].plot(data_f['qv'], height, color = sto_colors['qv'], label = r"$q_v$")
-ax[1, 1].plot(data_0['qv'], height, color = det_colors['qv'], linestyle = "dashed")
-ax[1, 1].set_xlabel(r"Vapor de Agua (g/kg)")
-ax[1, 1].set_ylim([0,15])
-
-ax[1, 2].plot(data_f['qr'], height, color = sto_colors['qr'], label = r"$q_r$")
-ax[1, 2].plot(data_0['qr'], height, color = det_colors['qr'], linestyle = "dashed")
-ax[1, 2].set_xlabel(r"Agua líquida (g/kg)")
-ax[1, 2].set_ylim([0,15])
-
-
-ax[1, 0].set_ylabel("Altura (km)")
-ax[1, 0].set_yticks([0, 3, 6, 9, 12, 15])
-ax[1, 0].plot(data_f['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
-ax[1, 0].plot(data_0['qn'],height, color = det_colors['qn'], linestyle = "dashed")
-ax[1, 0].set_xlabel(r"CCN ($p/cm^3$)")
-fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=5, fancybox=True, shadow=True)
-fig2.savefig('plot2-gamma.png')
+for i in range(80):
+    fig = plot_data_f(i)
+    fig.savefig(f"fig_nu0\\fig_nu0_{round(rel_t_step[i], 4)}.png")
+    # plt.show()
