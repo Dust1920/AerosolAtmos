@@ -195,5 +195,5 @@ def plot_data_f(time_id, **kwargs):
 
 for i in range(80):
     fig = plot_data_f(i)
-    fig.savefig(f"fig_nu0\\fig_nu0_{round(rel_t_step[i], 4)}.png")
+    fig.savefig(f"fig_gamma2\\fig_gamma2_{round(rel_t_step[i], 4)}.png")
     # plt.show()
