@@ -92,6 +92,7 @@ def matlab_plot(df, **kwargs):
     ax[1, 2].plot(df['qr_np1'] * qs, df.index, label = r"$q_r$", color = sto_colors['qr'])
     ax[1, 2].plot(df['qr_ini'] * qs, df.index, linestyle = "dashed", color = "black")
     ax[1, 2].set_xlabel("Lluvia (g/kg)")
+    ax[1, 2].set_ylim([0, 5])
     # ax[1, 2].set_ylabel("Altura (km)")
     ax[1, 2].set_yticks([0, 5, 10, 15])
     ax[1, 2].set_ylim([0, 15])

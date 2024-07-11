@@ -183,6 +183,7 @@ def plot_data_f(time_id, **kwargs):
     ax[1, 2].plot(data_0['qr'], height, color = det_colors['qr'], linestyle = "dashed")
     ax[1, 2].set_xlabel(r"Agua líquida (g/kg)")
     ax[1, 2].set_ylim([0,15])
+    ax[1, 2].set_ylim([0, 5])
 
 
     ax[1, 0].set_ylabel("Altura (km)")
