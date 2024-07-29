@@ -164,13 +164,13 @@ def plot_data_f(time_id, **kwargs):
     ax[0, 0].plot(data_0['w'],height, color = det_colors['w'], linestyle = "dashed")
     ax[0, 0].set_ylim([0,15])
     ax[0, 0].set_xlim([-5,5])
-    ax[0, 0].set_xlabel("Velocidad (m/s)")
+    ax[0, 0].set_xlabel("Velocidad Vert. (m/s)")
     ax[0, 0].set_yticks([0, 3, 6, 9, 12, 15])
 
     ax[0, 1].plot(data_f['theta'],height, label = r"$\theta'$", color = sto_colors['theta'])
     ax[0, 1].plot(data_0['theta'],height, color = det_colors['theta'], linestyle = "dashed")
     ax[0, 1].set_xlim([-5,5])
-    ax[0, 1].set_xlabel(r"Pert.Temperatura ($\theta$)")
+    ax[0, 1].set_xlabel(r"Pert.Temp.pot ($\theta$)")
 
     ax[0, 2].plot(data_f['cd'],height, label = r"$C_d'$", color = sto_colors['cd'])
     ax[0, 2].plot(data_0['cd'],height, color = det_colors['cd'], linestyle = "dashed")
@@ -190,7 +190,7 @@ def plot_data_f(time_id, **kwargs):
     ax[1, 0].set_yticks([0, 3, 6, 9, 12, 15])
     ax[1, 0].plot(data_f['qn'],height, label = r"$q_N$", color = sto_colors['qn'])
     ax[1, 0].plot(data_0['qn'],height, color = det_colors['qn'], linestyle = "dashed")
-    ax[1, 0].set_xlabel(r"CCN ($p/cm^3$)")
+    ax[1, 0].set_xlabel(r"Aerosoles ($p/cm^3$)")
     fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=6, fancybox=True, shadow=True)
     return fig2
 
