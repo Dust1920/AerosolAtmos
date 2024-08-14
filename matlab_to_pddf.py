@@ -9,6 +9,10 @@ def console_space():
 Leer archivos Matlab y convertirlos en un dataframe de pandas. 
 """
 
+"""
+Ejemplo
+
+
 matlab_files_folder = "matlab_files"
 matlab_files = os.listdir(matlab_files_folder)
 matlab_files = [x for x in matlab_files if x.endswith('.mat')]
@@ -42,6 +46,8 @@ print("Valores uni-D\n", one_l)  # D de Dimensional
 print("Valores multi-D", df)
 
 
+"""
+
 
 """
 Funciones finales:
@@ -53,6 +59,7 @@ Funciones finales:
 def select(code, **kwargs):
     folder = kwargs.get('folder',"matlab_files")
     extension = kwargs.get('ext','.mat')
+    matlab_files = os.listdir(folder)
     ext_files = [x for x in matlab_files if x.endswith(extension)]
     file = ext_files[code]
     print("Archivo Seleccionado: ", file)
