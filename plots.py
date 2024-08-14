@@ -142,7 +142,7 @@ def inital_plot(mode):
     data_0 = csv_to_t(0, mode)
     height = np.linspace(0,15,len(data_0))
     fig1, ax = plt.subplots(ncols=2, nrows=1, figsize = (8,6),sharey = True)
-    ax[0].plot(data_0['qn'], height, label = r"$q_N(0, z)$", color = sto_colors['qn'])
+    ax[0].plot(data_0['qn'] * 2, height, label = r"$q_N(0, z)$", color = sto_colors['qn'])
     ax[1].plot(data_0['qvs'], height, label = r"$q_{vs}(0, z)$", color = sto_colors['qvs'])
     ax[1].plot(data_0['qv'], height, label = r"$q_v(0, z)$", color = sto_colors['qv'])
     ax[0].set_xlabel('CCN (ppV)')
@@ -193,8 +193,12 @@ def plot_data_f(time_id, **kwargs):
     ax[1, 0].set_xlabel(r"Aerosoles ($p/cm^3$)")
     fig2.legend(loc='upper center', bbox_to_anchor=(0.5, 0.95), ncol=6, fancybox=True, shadow=True)
     return fig2
-
+"""
 for i in range(80):
     fig = plot_data_f(i)
     fig.savefig(f"fig_gamma2\\fig_gamma2_{round(rel_t_step[i], 4)}.png")
     # plt.show()
+"""
+
+x = inital_plot('sto')
+plt.show()
